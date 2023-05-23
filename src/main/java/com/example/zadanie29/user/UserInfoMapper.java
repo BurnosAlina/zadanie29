@@ -1,5 +1,8 @@
 package com.example.zadanie29.user;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserInfoMapper {
 
     public UserInfoDto convertToDto(UserInfo userInfo) {

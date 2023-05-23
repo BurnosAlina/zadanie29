@@ -1,8 +1,8 @@
 INSERT INTO user_info (first_name, last_name, email, password)
 VALUES
-    ('John', 'Doe', 'john.doe@example.com', '{bcrypt}$2a$10$m3bo2rt4YpBM97No6IorzOXem5e.fr1OLRCorlZoohzc7OqKuLOMG'),
-    ('Jane', 'Doe', 'jane.doe@example.com', '{bcrypt}$2a$10$bJCSffotwqCRP3IbVvvB7euk0ituM4JFu1HnpbcUTkIh7/hgUH1NO'),
-    ('Bob', 'Smith', 'bob.smith@example.com', '{bcrypt}$2a$10$ajRintSYIpHP5ovDTBYwa.1xNASxWE7971ZWJyCSatmWgqI5jZp/q');
+    ('John', 'Doe', 'john.doe@example.com', '{noop}pass1'),
+    ('Jane', 'Doe', 'jane.doe@example.com', '{noop}pass2'),
+    ('Bob', 'Smith', 'bob.smith@example.com', '{noop}pass3');
 
 INSERT INTO user_role (id, name, description)
 VALUES

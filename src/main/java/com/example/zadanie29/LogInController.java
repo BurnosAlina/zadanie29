@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class LogInController {
 
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
 
     public LogInController(UserInfoService userInfoService) {
         this.userInfoService = userInfoService;

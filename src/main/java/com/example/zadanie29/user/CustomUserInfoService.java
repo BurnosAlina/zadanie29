@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserInfoService implements UserDetailsService {
 
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
 
     public CustomUserInfoService(UserInfoService userInfoService) {
         this.userInfoService = userInfoService;

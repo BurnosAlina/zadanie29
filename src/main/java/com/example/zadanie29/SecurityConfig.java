@@ -15,8 +15,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         PathRequest.H2ConsoleRequestMatcher h2ConsoleRequestMatcher = PathRequest.toH2Console();
         http.authorizeHttpRequests(request -> request
-                .requestMatchers("/usersList/**").hasAuthority("ROLE_Admin")
-                .requestMatchers("/changeRole/**").hasAuthority("ROLE_Admin")
+                .requestMatchers("/usersList/**").hasRole("Admin")
+                .requestMatchers("/changeRole/**").hasRole("Admin")
                 .requestMatchers("/users.jpg").permitAll()
                 .requestMatchers("/style.css").permitAll()
                 .requestMatchers("/register").permitAll()
@@ -24,9 +24,9 @@ public class SecurityConfig {
                 .requestMatchers("/").permitAll()
                 .anyRequest().authenticated()
         );
-        http.formLogin(form -> form.loginPage("/login").permitAll());
+        http.formLogin(form -> form.loginPage("/login").successForwardUrl("/").permitAll());
         http.logout(logout -> logout.logoutSuccessUrl("/").permitAll());
-        http.csrf().disable();
+        http.csrf().ignoringRequestMatchers("/login").disable();
         http.headers().frameOptions().sameOrigin();
         return http.build();
     }

@@ -19,16 +19,6 @@ public class UserInfo {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRole> roles;
 
-    public UserInfo(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public UserInfo() {
-    }
-
     public Long getId() {
         return id;
     }

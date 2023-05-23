@@ -2,35 +2,26 @@ package com.example.zadanie29.userRole;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserRoleService {
 
-    private UserRoleRepository userRoleRepository;
-    private UserRoleMapper userRoleMapper = new UserRoleMapper();
+    private final UserRoleRepository userRoleRepository;
+    private final UserRoleMapper userRoleMapper;
 
-    public UserRoleService(UserRoleRepository userRoleRepository) {
+    public UserRoleService(UserRoleRepository userRoleRepository, UserRoleMapper userRoleMapper) {
         this.userRoleRepository = userRoleRepository;
+        this.userRoleMapper = userRoleMapper;
     }
 
-    public List<UserRoleDto> findAll() {
+    public Set<UserRoleDto> findAll() {
         Iterable<UserRole> allUserRoles = userRoleRepository.findAll();
-        List<UserRoleDto> userRolesDto = new ArrayList<>();
+        Set<UserRoleDto> userRolesDto = new HashSet<>();
         for (UserRole userRole : allUserRoles) {
-            if (!isAlreadyOnList(userRole, userRolesDto)) {
-                userRolesDto.add(userRoleMapper.convertToDto(userRole));
-            }
+            userRolesDto.add(userRoleMapper.convertToDto(userRole));
         }
         return userRolesDto;
-    }
-
-    private boolean isAlreadyOnList(UserRole userRole, List<UserRoleDto> userRolesDto) {
-        boolean isAlreadyOnList = false;
-        for (UserRoleDto userRoleDto : userRolesDto) {
-            isAlreadyOnList = userRole.getName().equals(userRoleDto.getName());
-        }
-        return isAlreadyOnList;
     }
 }

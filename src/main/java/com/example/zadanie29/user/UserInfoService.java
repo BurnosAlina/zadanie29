@@ -5,24 +5,27 @@ import com.example.zadanie29.userRole.UserRoleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
 @Service
 public class UserInfoService {
 
-    private UserInfoRepository userInfoRepository;
+    private final UserInfoRepository userInfoRepository;
 
-    private UserRoleRepository userRoleRepository;
+    private final UserRoleRepository userRoleRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private UserInfoMapper userInfoMapper = new UserInfoMapper();
+    private final UserInfoMapper userInfoMapper;
 
-    public UserInfoService(UserInfoRepository userInfoRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
+    public UserInfoService(UserInfoRepository userInfoRepository, UserRoleRepository userRoleRepository,
+                           PasswordEncoder passwordEncoder, UserInfoMapper userInfoMapper) {
         this.userInfoRepository = userInfoRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userInfoMapper = userInfoMapper;
     }
 
     public List<UserInfoDto> findAll() {
@@ -71,12 +74,12 @@ public class UserInfoService {
             user.setFirstName(userInfoDto.getFirstName());
             user.setLastName(userInfoDto.getLastName());
             user.setRoles(userInfoDto.getRoles());
-            if (userInfoDto.getNewPassword() != null && !userInfoDto.getNewPassword().isEmpty()) {
+            if (StringUtils.hasText(userInfoDto.getNewPassword())) {
                 String passwordHash = passwordEncoder.encode(userInfoDto.getNewPassword());
                 user.setPassword(passwordHash);
             }
+            userInfoRepository.save(user);
         }
-        userInfoRepository.save(user);
         return userInfoMapper.convertToDto(user);
     }
 

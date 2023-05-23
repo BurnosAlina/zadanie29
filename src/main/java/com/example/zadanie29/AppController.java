@@ -9,20 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AppController {
 
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
 
-    private UserRoleService userRoleService;
+    private final UserRoleService userRoleService;
 
     public AppController(UserInfoService userInfoService, UserRoleService userRoleService) {
         this.userInfoService = userInfoService;
         this.userRoleService = userRoleService;
     }
 
-    @GetMapping("/")
+    @RequestMapping("/")
     String home(Model model) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         UserInfoDto user = userInfoService.findByEmail(userName);
