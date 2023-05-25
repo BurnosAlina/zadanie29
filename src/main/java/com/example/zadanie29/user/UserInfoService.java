@@ -38,12 +38,8 @@ public class UserInfoService {
     }
 
     public UserInfoDto findByEmail(String email) {
-        Optional<UserInfo> userOptional = userInfoRepository.findByEmail(email);
-        UserInfoDto dto = new UserInfoDto();
-        if (userOptional.isPresent()) {
-            dto = userInfoMapper.convertToDto(userOptional.get());
-        }
-        return dto;
+        UserInfo userInfo = userInfoRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
+        return userInfoMapper.convertToDto(userInfo);
     }
 
     @Transactional
@@ -67,28 +63,21 @@ public class UserInfoService {
 
     @Transactional
     public UserInfoDto save(UserInfoDto userInfoDto) {
-        Optional<UserInfo> userOptional = userInfoRepository.findByEmail(userInfoDto.getEmail());
-        UserInfo user = new UserInfo();
-        if (userOptional.isPresent()) {
-            user = userOptional.get();
-            user.setFirstName(userInfoDto.getFirstName());
-            user.setLastName(userInfoDto.getLastName());
-            user.setRoles(userInfoDto.getRoles());
+        UserInfo userInfo = userInfoRepository.findByEmail(userInfoDto.getEmail())
+                .orElseThrow(NoSuchElementException::new);
+            userInfo.setFirstName(userInfoDto.getFirstName());
+            userInfo.setLastName(userInfoDto.getLastName());
+            userInfo.setRoles(userInfoMapper.convertRolesFromDto(userInfoDto.getRoles()));
             if (StringUtils.hasText(userInfoDto.getNewPassword())) {
                 String passwordHash = passwordEncoder.encode(userInfoDto.getNewPassword());
-                user.setPassword(passwordHash);
+                userInfo.setPassword(passwordHash);
             }
-            userInfoRepository.save(user);
-        }
-        return userInfoMapper.convertToDto(user);
+            userInfoRepository.save(userInfo);
+        return userInfoMapper.convertToDto(userInfo);
     }
 
     public UserInfoDto findById(Long id) {
-        Optional<UserInfo> userOptional = userInfoRepository.findById(id);
-        if (userOptional.isPresent()) {
-            return userInfoMapper.convertToDto(userOptional.get());
-        } else {
-            throw new NoSuchElementException("User not found");
-        }
+        UserInfo userInfo = userInfoRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return userInfoMapper.convertToDto(userInfo);
     }
 }

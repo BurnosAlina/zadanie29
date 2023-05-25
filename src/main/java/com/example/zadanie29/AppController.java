@@ -2,14 +2,14 @@ package com.example.zadanie29;
 
 import com.example.zadanie29.user.UserInfoDto;
 import com.example.zadanie29.user.UserInfoService;
+import com.example.zadanie29.userRole.UserRoleDto;
 import com.example.zadanie29.userRole.UserRoleService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @Controller
 public class AppController {
@@ -51,7 +51,6 @@ public class AppController {
     @GetMapping("/usersList")
     String userList(Model model) {
         model.addAttribute("users", userInfoService.findAll());
-        model.addAttribute("roles", userRoleService.findAll());
         return "usersList";
     }
 

@@ -17,8 +17,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/usersList/**").hasRole("Admin")
                 .requestMatchers("/changeRole/**").hasRole("Admin")
-                .requestMatchers("/users.jpg").permitAll()
-                .requestMatchers("/style.css").permitAll()
+                .requestMatchers("/resources/**").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers(h2ConsoleRequestMatcher).permitAll()
                 .requestMatchers("/").permitAll()

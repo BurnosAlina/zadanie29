@@ -1,6 +1,7 @@
 package com.example.zadanie29.user;
 
 import com.example.zadanie29.userRole.UserRole;
+import com.example.zadanie29.userRole.UserRoleDto;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,7 @@ public class CustomUserInfoService implements UserDetailsService {
     private UserDetails createUserDetails(UserInfoDto user) {
         List<SimpleGrantedAuthority> authorities = user.getRoles()
                 .stream()
-                .map((UserRole role) -> new SimpleGrantedAuthority(role.getName()))
+                .map((UserRoleDto role) -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
         return User.builder()
                 .username(user.getEmail())
