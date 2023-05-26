@@ -2,14 +2,13 @@ package com.example.zadanie29;
 
 import com.example.zadanie29.user.UserInfoDto;
 import com.example.zadanie29.user.UserInfoService;
-import com.example.zadanie29.userRole.UserRoleDto;
 import com.example.zadanie29.userRole.UserRoleService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.NoSuchElementException;
 
 @Controller
 public class AppController {
@@ -25,9 +24,13 @@ public class AppController {
 
     @RequestMapping("/")
     String home(Model model) {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserInfoDto user = userInfoService.findByEmail(userName);
-        model.addAttribute("user", user);
+        try {
+            String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+            UserInfoDto user = userInfoService.findByEmail(userName);
+            model.addAttribute("user", user);
+        } catch (NoSuchElementException e) {
+            //ignore
+        }
         return "index";
     }
 

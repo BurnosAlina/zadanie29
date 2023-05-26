@@ -28,9 +28,9 @@
     <div class="mb-3">
         <input type="hidden" class="form-control" id="password" th:field="*{password}">
     </div>
-    <select th:field="*{roles}" id="roleSelect" name="roles">
-        <option th:each="role: ${roles}" th:text="${role.name}" th:value="${role.id}"
-                th:selected="${role.id == user.roles}"></option>
+    <select th:field="*{roleName}" id="roleSelect" name="role">
+        <option th:each="role: ${roles}" th:text="${role.name}" th:value="${role.name}"
+                th:selected="${role.name == user.roleName}"></option>
     </select>
     <button type="submit">Zmień role</button>
 </form>

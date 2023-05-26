@@ -16,8 +16,7 @@
 <h2>Użytkownicy:</h2>
 <ul>
     <li th:each="user: ${users}">
-        <span th:text="|${user.firstName} ${user.lastName}, ${user.email} |"></span>
-        <span th:each="role: ${user.roles}" th:text="${role.name}"></span>
+        <span th:text="|${user.firstName} ${user.lastName}, ${user.email}, ${user.roleName}|"></span>
         <a th:href="@{/changeRole/{id}(id=${user.id})}">Zmień rolę</a>
     </li>
 </ul>

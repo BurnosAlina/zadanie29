@@ -3,8 +3,6 @@ package com.example.zadanie29.user;
 import com.example.zadanie29.userRole.UserRole;
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
 public class UserInfo {
 
@@ -16,8 +14,8 @@ public class UserInfo {
     private String email;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<UserRole> roles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private UserRole role;
 
     public Long getId() {
         return id;
@@ -59,11 +57,11 @@ public class UserInfo {
         this.password = password;
     }
 
-    public Set<UserRole> getRoles() {
-        return roles;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

@@ -13,6 +13,7 @@
     <h1>Użytkownicy app - Edytuj dane</h1>
 </div>
 <form method="post" th:action="@{/edit}" th:object="${user}">
+    <input type="hidden" th:field="*{roleName}">
     <div class="mb-3">
         <label for="firstName" class="form-label">Imię</label>
         <input type="text" class="form-control" id="firstName" th:field="*{firstName}">

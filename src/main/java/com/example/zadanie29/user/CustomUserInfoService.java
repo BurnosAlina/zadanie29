@@ -1,7 +1,5 @@
 package com.example.zadanie29.user;
 
-import com.example.zadanie29.userRole.UserRole;
-import com.example.zadanie29.userRole.UserRoleDto;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collections;
+
 
 @Service
 public class CustomUserInfoService implements UserDetailsService {
@@ -28,14 +26,11 @@ public class CustomUserInfoService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(UserInfoDto user) {
-        List<SimpleGrantedAuthority> authorities = user.getRoles()
-                .stream()
-                .map((UserRoleDto role) -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRoleName());
         return User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .authorities(authorities)
+                .authorities(Collections.singletonList(authority))
                 .build();
     }
 }

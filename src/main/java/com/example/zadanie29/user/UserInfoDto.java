@@ -1,10 +1,5 @@
 package com.example.zadanie29.user;
 
-import com.example.zadanie29.userRole.UserRole;
-import com.example.zadanie29.userRole.UserRoleDto;
-
-import java.util.Set;
-
 public class UserInfoDto {
 
     private Long id;
@@ -12,16 +7,16 @@ public class UserInfoDto {
     private String lastName;
     private String email;
     private String password;
-    private Set<UserRoleDto> roles;
+    private String roleName;
     private String newPassword;
 
-    public UserInfoDto(Long id, String firstName, String lastName, String email, String password, Set<UserRoleDto> roles) {
+    public UserInfoDto(Long id, String firstName, String lastName, String email, String password, String roleName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.roleName = roleName;
     }
 
     public String getFirstName() {
@@ -56,12 +51,12 @@ public class UserInfoDto {
         this.password = password;
     }
 
-    public Set<UserRoleDto> getRoles() {
-        return roles;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRoles(Set<UserRoleDto> roles) {
-        this.roles = roles;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getNewPassword() {

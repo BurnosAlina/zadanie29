@@ -50,14 +50,12 @@ public class UserInfoService {
         user.setEmail(dto.getEmail());
         String passwordHash = passwordEncoder.encode(dto.getPassword());
         user.setPassword(passwordHash);
-
         Optional<UserRole> role = userRoleRepository.findByName("ROLE_User");
         if (role.isPresent()) {
-            user.setRoles(new HashSet<>(Collections.singletonList(role.get())));
+            user.setRole(role.get());
         } else {
             throw new NoSuchElementException("Nie ma takiej roli");
         }
-
         userInfoRepository.save(user);
     }
 
@@ -65,14 +63,15 @@ public class UserInfoService {
     public UserInfoDto save(UserInfoDto userInfoDto) {
         UserInfo userInfo = userInfoRepository.findByEmail(userInfoDto.getEmail())
                 .orElseThrow(NoSuchElementException::new);
-            userInfo.setFirstName(userInfoDto.getFirstName());
-            userInfo.setLastName(userInfoDto.getLastName());
-            userInfo.setRoles(userInfoMapper.convertRolesFromDto(userInfoDto.getRoles()));
-            if (StringUtils.hasText(userInfoDto.getNewPassword())) {
-                String passwordHash = passwordEncoder.encode(userInfoDto.getNewPassword());
-                userInfo.setPassword(passwordHash);
-            }
-            userInfoRepository.save(userInfo);
+        userInfo.setFirstName(userInfoDto.getFirstName());
+        userInfo.setLastName(userInfoDto.getLastName());
+        UserRole userRole = userRoleRepository.findByName(userInfoDto.getRoleName()).orElseThrow(NoSuchElementException::new);
+        userInfo.setRole(userRole);
+        if (StringUtils.hasText(userInfoDto.getNewPassword())) {
+            String passwordHash = passwordEncoder.encode(userInfoDto.getNewPassword());
+            userInfo.setPassword(passwordHash);
+        }
+        userInfoRepository.save(userInfo);
         return userInfoMapper.convertToDto(userInfo);
     }
 
