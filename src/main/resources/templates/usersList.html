@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista użytkowników</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/style.css}">
+</head>
+<body>
+<div class="logo">
+    <img th:src="@{/resources/users.jpg}" alt="Użytkownicy">
+    <h1>Użytkownicy app - Lista użytkowników</h1>
+</div>
+<div class="return">
+    <a th:href="@{/}">Strona główna</a>
+</div>
+<h2>Użytkownicy:</h2>
+<ul>
+    <li th:each="user: ${users}">
+        <span th:text="|${user.firstName} ${user.lastName}, ${user.email}, ${user.roleName}|"></span>
+        <a th:href="@{/changeRole/{id}(id=${user.id})}">Zmień rolę</a>
+    </li>
+</ul>
+</body>
+</html>

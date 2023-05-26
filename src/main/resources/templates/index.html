@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https//www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona główna</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/style.css}">
+</head>
+<body>
+<div class="logo">
+    <img th:src="@{/resources/users.jpg}" alt="Użytkownicy">
+    <h1>Użytkownicy app - Strona główna</h1>
+</div>
+<div sec:authorize="!isAuthenticated()">
+    <h5>Jeśli posiadasz już konto: <a th:href="@{/login}">ZALOGUJ SIĘ</a></h5>
+    <h5>Nie masz jeszcze konta?: <a th:href="@{/register}">ZAREJESTRUJ SIĘ</a></h5>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <a th:href="@{/logout}">Wyloguj</a>
+    <h1 th:text="|Witaj ${user.firstName}|"></h1>
+    <div sec:authorize="hasAuthority('ROLE_Admin')">
+        <a th:href="@{/usersList}">Lista wszystkich użytkowników</a>
+    </div>
+    <h4>Dane Twojego konta:</h4>
+    <p th:text="|Imię: ${user.firstName}|"></p>
+    <p th:text="|Nazwisko: ${user.lastName}|"></p>
+    <p th:text="|email: ${user.email}|"></p>
+    <a th:href="@{/edit}">Edytuj</a>
+</div>
+</body>
+</html>

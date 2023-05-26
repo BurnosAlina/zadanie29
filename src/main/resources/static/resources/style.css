@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    display: grid;
+    place-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.confirmation {
+    color: blue;
+}
+
